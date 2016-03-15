@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * implements tokens_alter
+ */
+
+function webform_country_token_names_tokens_alter(array &$replacements, array $context) {
+  if ( isset($replacements['[submission:values:country]'])) {
+    include_once DRUPAL_ROOT . '/includes/locale.inc';
+    $country_code = $replacements['[submission:values:country]'];
+    $all_countries    = country_get_list();
+
+    if ( isset($all_countries[$country_code]) ){
+      $replacements['[submission:values:country]'] = $all_countries[$country_code];
+    }
+  }
+}
